@@ -12,6 +12,7 @@ coordination of mentors needed to execute projects, ranging from recruitment to 
 The app has the following minimum requirements:
 1. `NodeJS` v16
 2. `Yarn`
+3. `MySQL`
 
 
 # App Features

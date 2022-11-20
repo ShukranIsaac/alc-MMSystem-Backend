@@ -1,0 +1,121 @@
+MMM-CLOUD PROJECT TEAM: ENTITIES & SCHEMAS FOR OUR BACKEND
+
+
+1.     USER
+-        id
+-        username
+-        email
+-        dateCreated
+-        role ( mentor, manager Admin)
+-        password
+-        profile_Complete(True or False)
+-        Country
+-        City
+- 	Social Profile(gitHub, facebook, twitter, linkedln)
+-	website
+-	Bio(About)
+-	Headline
+
+2.     user Details
+ID
+-        user_id
+-    manger_id
+-	previous held role: [String]
+- 	previous program: [String]
+-	Programme of interest: programe_id
+-	year_of_Technical_Experience: number
+-	document
+-  been a mentor before(Yes or No)
+- 	Technical proficiency(List)
+- 	Previous roles(List)
+- status: boolean
+-approved
+3.     PROGRAMME
+-        id
+-        name: string
+-        description: text
+-        Created_by: user_id
+-        Status(active, completed, archived)
+-	archivedby
+-	 programme_picture:
+- 	tasks(list)
+- 	date_created
+-	 date_completed
+-	date_archived
+- 	criteria(JSON)
+-	report(List)
+Relationship: One to many with Task.
+Relationship: Many to Many with Manager
+Relationship: One to many with Report
+
+ 4. ProgramsMentor
+Program_id
+User_id
+
+4.  Programme APPLICATION
+Programe_id
+User_id
+answers(JSON)
+Status: (Pending, Approved, Declied)
+approvedDeclied_By
+
+2.     TASK
+-        id
+-        title
+-        description
+-        date_created
+-        created_by
+-        status(unassigned, completed, pending, inprogress)
+                    - Program_id
+Relationship: Many to Many with Manager/ mentors
+Relationship: One to many with Report
+
+
+
+
+4.     TECH_STACK
+-        id
+-        name
+
+4.     Job Roles
+-        id
+-        name
+9.     REPORT
+-        id
+Type (programe,type)
+-        report_title
+Achievements
+Blocker
+recomendations
+-        date_created
+-        created_by
+Task_id
+program_id
+
+
+
+5.     CERTIFICATE
+-        id
+User_id
+Programe_id
+Series Id
+Issue Date
+Expiration Date
+-        date_created
+-        created_by
+-	approvedBy
+-        certificate_code
+-        status(approved, pending_generation, pending_approval)
+
+
+
+
+
+10.  CHAT
+11.  MESSAGE
+13.  CHAT BOX
+15.  DISCUSSION FORUM
+16.  NOTIFICATIONS
+
+
+programme.entity.ts

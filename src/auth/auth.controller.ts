@@ -9,24 +9,36 @@ import {
 } from '@nestjs/common';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { AuthService } from './auth.service';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { SignInCredentialsDto } from './dto/signin-credentials.dto';
+import { SignupCredentialsDto } from './dto/signup-credentials.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from './decorator/get-user.decorator';
+import { User } from '../users/entities/user.entity';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
+
+  @Get()
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
+  async getCurrentUser(@GetUser() user: User): Promise<User> {
+    return await this.authService.getUser(+user.id);
+  }
 
   @Post('login')
   async login(
     @Body(ValidationPipe) signinCredentialsDto: SignInCredentialsDto,
   ) {
-    return this.authService.login(signinCredentialsDto);
+    return await this.authService.login(signinCredentialsDto);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
+  @Post('register')
+  async register(
+    @Body(ValidationPipe) signUpCredentialsDto: SignupCredentialsDto,
+  ) {
+    return await this.authService.register(signUpCredentialsDto);
   }
 }

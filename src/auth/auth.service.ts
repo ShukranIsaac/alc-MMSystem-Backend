@@ -1,29 +1,29 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { AdminsService } from '../admins/admins.service';
+import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { SignInCredentialsDto } from './dto/signin-credentials.dto';
 import { JwtPayload } from './interface/jwt-payload.interface';
-import { Admin } from '../admins/entities/admin.entity';
-import * as bcrypt from 'bcrypt';
+import { User, UserRoles } from '../users/entities/user.entity';
+import { SignupCredentialsDto } from './dto/signup-credentials.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private adminService: AdminsService,
+    private userService: UsersService,
     private jwtService: JwtService,
   ) {}
 
   async login(
     signInCredentialsDto: SignInCredentialsDto,
-  ): Promise<{ accessToken: string; user: Admin }> {
+  ): Promise<{ accessToken: string; user: User }> {
     const { email, password } = signInCredentialsDto;
-    let resp = await this.adminService.findOne({ email });
+    let resp = await this.userService.findOne({ email });
     if (!resp) {
-      resp = await this.adminService.findOne({ username: email });
+      resp = await this.userService.findOne({ username: email });
     }
 
     if (!resp) {
-      resp = await this.adminService.findOne({ phone: email });
+      resp = await this.userService.findOne({ phone: email });
     }
     if (!resp) {
       throw new UnauthorizedException('Invalid credentials');
@@ -31,8 +31,7 @@ export class AuthService {
     if (resp && (await resp.validatePassword(password))) {
       const payload: JwtPayload = {
         id: resp.id,
-        first_name: resp.first_name,
-        last_name: resp.last_name,
+        name: resp.name,
         email: resp.email,
         phone: resp.phone,
         role: resp.role,
@@ -48,5 +47,35 @@ export class AuthService {
     } else {
       throw new UnauthorizedException('Invalid credentials');
     }
+  }
+
+  async register(
+    signupCredentialsDto: SignupCredentialsDto,
+  ): Promise<{ accessToken: string; user: User }> {
+    if (signupCredentialsDto.role === UserRoles.Admin) {
+      if (!signupCredentialsDto.email.endsWith('@andela.com')) {
+        throw new UnauthorizedException('Admin must have an @andela.com email');
+      }
+    }
+    const resp = await this.userService.create(signupCredentialsDto);
+    const payload: JwtPayload = {
+      id: resp.id,
+      name: resp.name,
+      email: resp.email,
+      phone: resp.phone,
+      role: resp.role,
+      username: resp.username,
+      photo: resp.phone,
+    };
+    const accessToken = this.jwtService.sign(payload);
+
+    return {
+      accessToken,
+      user: resp,
+    };
+  }
+
+  async getUser(id: number): Promise<User> {
+    return this.userService.findOne({ id: id });
   }
 }

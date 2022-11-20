@@ -7,14 +7,9 @@ import {
   IsEmail,
   IsNotEmpty,
 } from 'class-validator';
+import { UserRoles } from '../../users/entities/user.entity';
 
 export class SignupCredentialsDto {
-  @ApiProperty({ minimum: 4, maximum: 20, nullable: true })
-  @IsString()
-  @MinLength(4)
-  @MaxLength(20)
-  username?: string;
-
   @ApiProperty()
   @IsEmail()
   @IsNotEmpty()
@@ -22,23 +17,11 @@ export class SignupCredentialsDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  phone: string;
+  name: string;
 
-  @ApiProperty()
+  @ApiProperty({ nullable: false, enum: ['mentor', 'mentor-manger', 'admin'] })
   @IsNotEmpty()
-  first_name: string;
-
-  @ApiProperty()
-  last_name: string;
-
-  @ApiProperty({ nullable: true })
-  role?: string;
-
-  @ApiProperty({ nullable: true })
-  gender?: string;
-
-  @ApiProperty({ nullable: true })
-  dob?: Date;
+  role: UserRoles;
 
   @ApiProperty({
     minimum: 6,
