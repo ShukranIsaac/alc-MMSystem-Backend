@@ -1,4 +1,3 @@
-
 ## Description
 
 # ALC Mentors Management System (MMS)
@@ -6,18 +5,17 @@
 This is the app for the Mentors Management system. MMS is a people management app that enables proper
 coordination of mentors needed to execute projects, ranging from recruitment to off-boarding.
 
-
 # Prerequisites
 
 The app has the following minimum requirements:
+
 1. `NodeJS` v16
 2. `Yarn`
-3. `MySQL`
-
 
 # App Features
 
 The main app features and functionalities are as follows:
+
 1. Authentication/Authorization
 2. Recruitment
 3. Communication and Engagement
@@ -25,10 +23,28 @@ The main app features and functionalities are as follows:
 5. Activities Tracking and Reporting
 6. Discussion Forum
 
-There are three groups of user categories namely `Admin`, `Mentor Manager(MM)`, and `Mentor`. The expected access levels for this group
+There are three groups of user categories namely `Admin`, `Mentor Manager(MM)`, and `Mentor`. The expected access levels
+for this group
 users is listed as follows:
 
+Team 1 to 4:
+Users (Update profile, change password, reset password)
+Programmes (Create, Read, Update, Delete)
+Programme Applications (Create, Read, Update, Delete)
+
+Team 5 to 7:
+Tasks (Create, Read, Update, Delete)
+Reports (Create, Read, Update, Delete)
+CERTIFICATE (Create, Read, Update, Delete)
+
+Team 8 to 10:
+Chat (Create, Read, Update, Delete)
+DISCUSSION (Create, Read, Update, Delete)
+NOTIFICATIONS (Create, Read, Update, Delete)
+
+
 ## Admin Category:
+
 - Login/Logout
 - Create program
 - Add MM
@@ -65,7 +81,8 @@ users is listed as follows:
 - Message the list of unselected mentors
 - Engage on the discussion forum etc.
 
-##  Mentor
+## Mentor
+
 - Apply to be a mentor
 - Receive application status message
 - Login/Logout
@@ -82,7 +99,8 @@ users is listed as follows:
 - Receive notification to download or not qualify for the certificate
 - Chat 1:1 with any user
 
-##  Mentor Manager
+## Mentor Manager
+
 - Login/Logout
 - Set up my profile
 - Access assigned programs
@@ -97,7 +115,7 @@ users is listed as follows:
 - Receive notification from mentor activities
 - Generate mentor certificate
 - Share the certificate with Admin
-- Send approval request for  mentor certificate
+- Send approval request for mentor certificate
 - Send broadcast message to all MM
 - Send broadcast message to all mentors
 - Chat 1:1 with any user
@@ -106,6 +124,7 @@ users is listed as follows:
 # How to use this repo
 
 To use and contribute to the project, do the following:
+
 1. Fork it to your GitHub account.
 2. Clone the repo with the command git clone to your local machine.
 3. Open a feature branch from the 'dev' branch.
@@ -116,19 +135,24 @@ To use and contribute to the project, do the following:
 7. Open a pull request against the dev branch and request a review from your Team Lead.
 
 # Local Database Setup
+
 1. Install and create a MySQL database
 2. Create a .env file in the root directory
 3. Set the environment variables with your local database credentials (see .env.example for reference)
-4. Run `yarn migrate` to create the tables in your database
-5. Run `yarn seed` to seed the database with dummy data
+
 
 ## Design
+
 - The design can be find [here](https://www.figma.com/file/JNZKj3lachPypSOMBOhC1e/MMS-ALC-Mobile-Project?node-id=0%3A1)
+- Find the Prototypes
+  here [Admin](https://www.figma.com/file/41d70tx02pRHlj8wvc3WN8/admin-prototype?node-id=0%3A1&t=7tieNXXu5Bu4IaEg-1) [Mentor Manager](https://www.figma.com/file/EeXcwPCnyvw5r45EgyCoIG/Mentor-Manager-prototype?node-id=0%3A1&t=JeA1aXVNqTcX2Yob-1) [Mentors](https://www.figma.com/file/bUlIQe3tOUH14n6aOUeAsF/mentor-prototype?node-id=0%3A1&t=gSJrcVE00ehsLMtU-1)
 - Work on your Team assigned task eg. Team 1, Team 2 etc.
 - NOTE: Stickly adhere to the style guide on the design, buttons, texts etc.
 
 # Creating issue for your Teams
-- Your Issues should take this simple pattern for easy identification by your team members: feature or bug name-mmm-team-1
+
+- Your Issues should take this simple pattern for easy identification by your team members: feature or bug
+  name-mmm-team-1
 - Find a sample [here](https://github.com/ALCOpenSource/alc-MMSystem-admin/issues/6)
 
 ## Installation

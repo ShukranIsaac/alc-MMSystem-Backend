@@ -4,6 +4,6 @@ import { UserDetailsController } from './user-details.controller';
 
 @Module({
   controllers: [UserDetailsController],
-  providers: [UserDetailsService]
+  providers: [UserDetailsService],
 })
 export class UserDetailsModule {}

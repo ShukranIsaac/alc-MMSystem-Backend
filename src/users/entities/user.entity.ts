@@ -91,20 +91,20 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   salt: string;
 
-  @OneToOne((type) => UserDetail, (userDetails) => userDetails.user, {
+  @OneToOne(() => UserDetail, (userDetails) => userDetails.user, {
     cascade: true,
   })
   @JoinColumn()
   userDetails: UserDetail;
 
-  @ManyToOne((type) => User, (user) => user.mentors, {
+  @ManyToOne(() => User, (user) => user.mentors, {
     cascade: true,
     nullable: true,
   })
   @JoinColumn()
   manger: User;
 
-  @OneToMany((type) => User, (user) => user.manger, {
+  @OneToMany(() => User, (user) => user.manger, {
     nullable: true,
   })
   @JoinColumn()

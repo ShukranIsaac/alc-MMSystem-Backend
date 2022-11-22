@@ -5,7 +5,7 @@ import { UpdateProgrammeDto } from './dto/update-programme.dto';
 @Injectable()
 export class ProgrammesService {
   create(createProgrammeDto: CreateProgrammeDto) {
-    return 'This action adds a new programme';
+    return createProgrammeDto;
   }
 
   findAll() {
@@ -17,7 +17,7 @@ export class ProgrammesService {
   }
 
   update(id: number, updateProgrammeDto: UpdateProgrammeDto) {
-    return `This action updates a #${id} programme`;
+    return `This action updates a #${id}  ${updateProgrammeDto}programme`;
   }
 
   remove(id: number) {

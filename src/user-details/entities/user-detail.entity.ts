@@ -3,7 +3,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -36,13 +35,13 @@ export class UserDetail {
   @Column({ default: false })
   years_of_experience?: boolean;
 
-  @ManyToOne((type) => Programme, {
+  @ManyToOne(() => Programme, {
     cascade: true,
   })
   @JoinColumn()
   programme: Programme;
 
-  @OneToOne((type) => User, (user) => user.userDetails, {})
+  @OneToOne(() => User, (user) => user.userDetails, {})
   @JoinColumn()
   user: User;
 }
