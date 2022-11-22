@@ -3,11 +3,9 @@ import {
   Controller,
   Get,
   Post,
-  Request,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
-import { JwtAuthGuard } from './jwt-auth.guard';
 import { AuthService } from './auth.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { SignInCredentialsDto } from './dto/signin-credentials.dto';

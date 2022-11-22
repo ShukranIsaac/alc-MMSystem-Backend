@@ -11,6 +11,11 @@ import { AuthModule } from './auth/auth.module';
 import { UserDetailsModule } from './user-details/user-details.module';
 import { ProgrammesModule } from './programmes/programmes.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { TasksModule } from './tasks/tasks.module';
+import { JobRolesModule } from './job-roles/job-roles.module';
+import { TechStacksModule } from './tech-stacks/tech-stacks.module';
+import { ReportsModule } from './reports/reports.module';
+import { CertificatesModule } from './certificates/certificates.module';
 
 @Module({
   imports: [
@@ -43,7 +48,12 @@ import { NotificationsModule } from './notifications/notifications.module';
     AuthModule,
     UserDetailsModule,
     ProgrammesModule,
-    NotificationsModule
+    NotificationsModule,
+    TasksModule,
+    JobRolesModule,
+    TechStacksModule,
+    ReportsModule,
+    CertificatesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

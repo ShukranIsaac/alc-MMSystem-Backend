@@ -118,4 +118,26 @@ Expiration Date
 16.  NOTIFICATIONS
 
 
-programme.entity.ts
+Admin self assign mentor/ mentor manager
+/users/profile/update
+
+/users   (get all users)
+
+/users/mentors (get all mentors)
+
+/users/mentors-managers  (get all mentor managers)
+
+/users/mentors/applicant  (get all mentor applicants)
+
+/users/mentors-managers/applicant  (get all mentor manager applicant  )
+
+/users/mentors/approved  (get all approved   mentors )
+
+/users/mentors-managers/approved  (get all  approved   mentor managers )
+
+Get /programs (get all programs)
+Get /programs/:id (get single program)
+Post /programs (create new program)
+Put /programs/:id (update program)
+
+
