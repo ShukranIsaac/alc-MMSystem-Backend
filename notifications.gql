@@ -1,0 +1,35 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Notification {
+  id: Int!
+
+  """Name of the notification"""
+  name: String!
+}
+
+type Query {
+  notifications: [Notification!]!
+  notification(id: Int!): Notification!
+}
+
+type Mutation {
+  create(notification: CreateNotificationDto!): Notification!
+  update(id: Int!, notification: UpdateNotificationDto!): Notification!
+  deleteNotification(id: Int!): Notification!
+}
+
+input CreateNotificationDto {
+  id: Float!
+  name: String!
+}
+
+input UpdateNotificationDto {
+  id: Float!
+  name: String!
+}
+
+type Subscription {
+  commentAdded: Notification!
+}

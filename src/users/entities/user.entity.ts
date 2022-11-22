@@ -11,8 +11,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Field, ObjectType, Int } from '@nestjs/graphql';
 import * as bcrypt from 'bcrypt';
 import { UserDetail } from '../../user-details/entities/user-detail.entity';
+import { Notification } from 'src/notifications/entities/notification.entity';
 
 export enum UserRoles {
   Admin = 'admin',
@@ -20,11 +22,14 @@ export enum UserRoles {
   MentorManger = 'mentor-manger',
 }
 
+@ObjectType()
 @Entity('users')
 export class User extends BaseEntity {
+  @Field(type => Int)
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field(type => String)
   @Column({ type: 'varchar' })
   name: string;
 
@@ -79,7 +84,7 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   dob: Date;
 
-  @Column({ enum: UserRoles, default: UserRoles.Mentor })
+  @Column({ type: 'enum', enum: UserRoles, default: UserRoles.Mentor })
   role: UserRoles;
 
   @Column({ type: 'varchar' })
@@ -109,6 +114,9 @@ export class User extends BaseEntity {
   })
   @JoinColumn()
   mentors: User[];
+
+  @OneToMany((type) => Notification, ({ publisher }) => publisher,{ nullable: true })
+  notifications: Notification[];
 
   @Column()
   @CreateDateColumn()
