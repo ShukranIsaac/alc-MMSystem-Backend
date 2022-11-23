@@ -23,13 +23,10 @@ type Mutation {
 input CreateNotificationDto {
   id: Float!
   name: String!
+  publisher: String!
 }
 
 input UpdateNotificationDto {
   id: Float!
   name: String!
-}
-
-type Subscription {
-  commentAdded: Notification!
 }
