@@ -14,10 +14,8 @@ export class NotificationsService {
     private userService: UsersService
   ) { }
 
-  async create({ publisher, ...rest }: CreateNotificationDto) {
-    const user = await this.userService.findOne({ id: Number(publisher) })
-    const body = { publisher: user, ...rest }
-    return this.notifications.insert(this.notifications.create(body));
+  async create(notification: CreateNotificationDto): Promise<Notification> {
+    return await this.notifications.save(this.notifications.create(notification));
   }
 
   findAll() {
@@ -28,10 +26,10 @@ export class NotificationsService {
     return this.notifications.findOne({ where: { id } });
   }
 
-  async update(id: number, { publisher, ...rest }: UpdateNotificationDto) {
-    const user = await this.userService.findOne({ id: Number(id) })
-    const body = { publisher: user, ...rest }
-    return this.notifications.update(id, body)
+  async update(id: number, notification: UpdateNotificationDto) {
+    // const user = await this.userService.findOne({ id: Number(id) })
+    // const body = { publisher: user, ...rest }
+    return this.notifications.update(id, notification)
   }
 
   remove(id: number) {
