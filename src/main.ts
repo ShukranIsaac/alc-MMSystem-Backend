@@ -6,10 +6,13 @@ import { setupMaster, setupWorker } from "@socket.io/sticky";
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { RedisIoAdapter } from './notifications/adapters/redis.io.adapter';
 import { SocketIOServer } from './notifications/adapters/socket.io.server';
+import { GlobalExceptionFilter } from './utils/filters';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
+  app.useGlobalFilters(new GlobalExceptionFilter());
+
   const config = new DocumentBuilder()
     .addBearerAuth()
     .setTitle('MMM  API')
@@ -19,6 +22,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
