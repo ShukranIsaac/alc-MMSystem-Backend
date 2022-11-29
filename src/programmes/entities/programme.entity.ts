@@ -3,7 +3,6 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  JoinColumn,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -61,21 +60,19 @@ export class Programme {
   @DeleteDateColumn()
   deleted_at: Date;
 
-  @OneToMany(() => Task, (program) => program.id, {
+  @OneToMany(() => Task, (task) => task.programme, {
     nullable: true,
+    cascade: true,
   })
-  @JoinColumn()
   tasks: Task[];
 
-  @OneToMany(() => Report, (program) => program.id, {
+  @OneToMany(() => Report, (report) => report.programmes, {
     nullable: true,
   })
-  @JoinColumn()
   report: Report[];
 
-  @ManyToMany(() => User, (program) => program.id, {
+  @ManyToMany(() => User, (user) => user.manager, {
     nullable: true,
   })
-  @JoinColumn()
-  manager: User[];
+  managers: User[];
 }

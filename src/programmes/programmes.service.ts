@@ -1,14 +1,9 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProgrammeDto } from './dto/create-programme.dto';
 import { UpdateProgrammeDto } from './dto/update-programme.dto';
 import { Programme } from './entities/programme.entity';
-import { NAME_ALREADY_EXISTS } from 'src/utils/constants';
 import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
@@ -19,21 +14,13 @@ export class ProgrammesService {
   ) {}
 
   async create(createProgrammeDto: CreateProgrammeDto, createdBy: User) {
-    try {
-      const program = this.programmeRepository.create({
-        ...createProgrammeDto,
-        criteria: JSON.stringify(createProgrammeDto.criteria ?? {}, null, 2),
-        created_by: createdBy,
-      });
+    const program = this.programmeRepository.create({
+      ...createProgrammeDto,
+      criteria: JSON.stringify(createProgrammeDto.criteria ?? {}, null, 2),
+      created_by: createdBy,
+    });
 
-      return await this.programmeRepository.save(program);
-    } catch (e) {
-      if (e.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException(NAME_ALREADY_EXISTS);
-      }
-
-      throw e;
-    }
+    return await this.programmeRepository.save(program);
   }
 
   /**

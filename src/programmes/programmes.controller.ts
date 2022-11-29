@@ -13,9 +13,9 @@ import { ProgrammesService } from './programmes.service';
 import { CreateProgrammeDto } from './dto/create-programme.dto';
 import { UpdateProgrammeDto } from './dto/update-programme.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/decorator/get-user.decorator';
 import { User } from 'src/users/entities/user.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('Programs')
 @Controller('programs')
@@ -23,7 +23,7 @@ export class ProgrammesController {
   constructor(private readonly programmesService: ProgrammesService) {}
 
   @Post()
-  @UseGuards(AuthGuard())
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   async create(
     @Body() createProgrammeDto: CreateProgrammeDto,
@@ -43,7 +43,7 @@ export class ProgrammesController {
   }
 
   @Put(':id')
-  @UseGuards(AuthGuard())
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   async update(
     @Param('id') id: string,

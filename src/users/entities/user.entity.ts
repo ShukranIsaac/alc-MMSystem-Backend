@@ -1,5 +1,7 @@
 import {
   BaseEntity,
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -14,11 +16,13 @@ import {
 import * as bcrypt from 'bcrypt';
 import { UserDetail } from '../../user-details/entities/user-detail.entity';
 import { Exclude } from 'class-transformer';
+import { Gender } from '../../utils/enums';
+import { Task } from '../../tasks/entities/task.entity';
 
 export enum UserRoles {
   Admin = 'admin',
   Mentor = 'mentor',
-  MentorManger = 'mentor-manger',
+  MentorManager = 'mentor-manager',
 }
 
 @Entity('users')
@@ -74,8 +78,8 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   headline: string;
 
-  @Column({ nullable: true })
-  gender: string;
+  @Column({ type: 'enum', enum: Gender, default: Gender.FEMALE })
+  gender: Gender;
 
   @Column({ nullable: true })
   dob: Date;
@@ -105,14 +109,17 @@ export class User extends BaseEntity {
     cascade: true,
     nullable: true,
   })
-  @JoinColumn()
   manager: User;
 
   @OneToMany(() => User, (user) => user.manager, {
     nullable: true,
   })
-  @JoinColumn()
   mentors: User[];
+
+  @OneToMany(() => Task, (task) => task.assignedTo, {
+    nullable: true,
+  })
+  tasks: Task[];
 
   @Column()
   @CreateDateColumn()
@@ -126,7 +133,29 @@ export class User extends BaseEntity {
   @DeleteDateColumn()
   deleted_at: Date;
 
+  @BeforeInsert()
+  async hashPassword() {
+    this.salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, this.salt);
+
+    if (!this.reset_code) {
+      this.reset_code = bcrypt.hashSync(crypto.randomUUID(), 8);
+    }
+  }
+
+  @BeforeUpdate()
+  async hashPasswordBeforeUpdate() {
+    if (
+      !this.password.startsWith('$2a$') &&
+      !this.password.startsWith('$2b$')
+    ) {
+      await this.hashPassword();
+    }
+  }
+
   async validatePassword(password: string): Promise<boolean> {
+    if (!password) return false;
+
     const hash = await bcrypt.hash(password, this.salt);
     return hash === this.password;
   }
